@@ -103,13 +103,11 @@ namespace AddRemoveProgramsCleaner {
             new ProgramToClean(UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, "VLC media player", "VLC"),
             new ProgramToClean(UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, "WinRAR archiver", "WinRAR"),
             new ProgramToClean(UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, "winscp3_is1", "WinSCP"),
-            new ProgramToClean(UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, "WRC 8_is1", setDisplayIconUsing: (location, directory) => joinPaths(location, "WRC8.exe")),
-            new ProgramToClean(UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, "RolandRDID0117", "Quad-Capture")
+            new ProgramToClean(UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, "RolandRDID0117", "Quad-Capture"),
+            new ProgramToClean(UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, "{521c89be-637f-4274-a840-baaf7460c2b2}", "Logitech G Hub")
         };
 
-        private static string? joinPaths(params string?[] paths) {
-            return paths.All(path => path != null) ? Path.Combine(paths!) : null;
-        }
+        private static string? joinPaths(params string?[] paths) => paths.All(path => path != null) ? Path.Combine(paths!) : null;
 
     }
 
