@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- From https://github.com/ravibpatel/ILRepack.Lib.MSBuild.Task/blob/master/ILRepack.Lib.MSBuild.Task/ILRepack.Lib.MSBuild.Task.targets -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="ILRepackCustom" AfterTargets="Build" Condition="$(Configuration.Contains('Release'))">
+    <ItemGroup>
+      <InputAssemblies Include="$(OutputPath)$(TargetName)$(TargetExt)" />
+
+      <!--
+        Include all dependency DLLs in the build directory, 
+        but exclude the 3 useless stubs from Microsoft.Win32.Registry, 
+        which have useful versions in runtimes (included below).
+      -->
+      <InputAssemblies Include="$(OutputPath)*.dll"
+                       Exclude="$(OutputPath)$(TargetName)$(TargetExt);
+                       $(OutputPath)Microsoft.Win32.Registry.dll;
+                       $(OutputPath)System.Security.AccessControl.dll;
+                       $(OutputPath)System.Security.Principal.Windows.dll" />
+
+      <!-- Include Windows-specific libraries, since this is a Windows program. -->
+      <InputAssemblies Include="$(OutputPath)runtimes\win\**\*.dll" />
+    </ItemGroup>
+
+    <ILRepack
+      Parallel="true"
+      DebugInfo="true"
+      AllowDuplicateResources="false"
+      InputAssemblies="@(InputAssemblies)"
+      TargetKind="SameAsPrimaryAssembly"
+      OutputFile="$(OutputPath)$(TargetName)$(TargetExt)" />
+  </Target>
+
+  <Target AfterTargets="ILRepackCustom" Name="CleanReferenceCopyLocalPathsCopy" Condition="$(Configuration.Contains('Release'))">
+    <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+    <ItemGroup>
+      <Directories Include="$([System.IO.Directory]::GetDirectories('$(OutDir)%(DestinationSubDirectory)', '*', System.IO.SearchOption.AllDirectories))" />
+      <Directories>
+        <Files>$([System.IO.Directory]::GetFiles("%(Directories.Identity)", "*", System.IO.SearchOption.AllDirectories).get_Length())</Files>
+      </Directories>
+    </ItemGroup>
+    <RemoveDir Directories="@(Directories)" Condition="%(Files)=='0'" />
+  </Target>
+</Project>

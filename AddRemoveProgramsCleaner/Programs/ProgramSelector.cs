@@ -23,6 +23,7 @@ namespace AddRemoveProgramsCleaner.Programs {
                 return baseKeyHandle.GetSubKeyNames()
                     .Select(subkey => baseKeyHandle.OpenSubKey(subkey, true))
                     .Where(subkey => keyName.ToString() == subkey?.GetValue("PackageCode") as string)
+                    .Compact()
                     .ToList();
             } else if (isKeyNameLiteral()) {
                 RegistryKey? subKey = baseKeyHandle.OpenSubKey(keyName.ToString(), true);
@@ -31,11 +32,12 @@ namespace AddRemoveProgramsCleaner.Programs {
                 return baseKeyHandle.GetSubKeyNames()
                     .Where(subkey => keyName.IsMatch(subkey))
                     .Select(subkey => baseKeyHandle.OpenSubKey(subkey, true))
-                    .Where(subkey => subkey != null)
+                    .Compact()
                     .ToList();
             }
         }
 
+        /// <returns><c>true</c> if none of the path components of <c>keyName</c> have wildcards (* or ?) in them, or <c>false</c> if one or more components do contain a wildcard.</returns>
         private bool isKeyNameLiteral() => keyName.Tokens.All(token => token is LiteralToken);
 
         public override string ToString() {
@@ -60,11 +62,11 @@ namespace AddRemoveProgramsCleaner.Programs {
 
         public static RegistryKey openKey(this UninstallBaseKey baseKey) {
             return baseKey switch {
-                UninstallBaseKey.LOCAL_MACHINE_UNINSTALL             => Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall"),
-                UninstallBaseKey.CURRENT_USER_UNINSTALL              => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall"),
-                UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS     => Registry.ClassesRoot.OpenSubKey(@"Installer\Products"),
-                UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL => Registry.LocalMachine.OpenSubKey(@"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"),
-                UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS     => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Installer\Products"),
+                UninstallBaseKey.LOCAL_MACHINE_UNINSTALL             => Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
+                UninstallBaseKey.CURRENT_USER_UNINSTALL              => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
+                UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS     => Registry.ClassesRoot.OpenSubKey(@"Installer\Products")!,
+                UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL => Registry.LocalMachine.OpenSubKey(@"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")!,
+                UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS     => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Installer\Products")!,
                 _                                                    => throw new ArgumentOutOfRangeException(nameof(baseKey), baseKey, null)
             };
         }
