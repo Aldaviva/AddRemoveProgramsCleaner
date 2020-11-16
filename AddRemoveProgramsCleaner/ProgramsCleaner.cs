@@ -36,6 +36,10 @@ namespace AddRemoveProgramsCleaner {
                             string? uninstallString          = key.GetValue(UNINSTALL_STRING) as string;
                             string? uninstallStringDirectory = Path.GetDirectoryName(uninstallString?.Trim('"'));
                             string? desiredDisplayIcon       = displayIconGenerator(installLocation, uninstallStringDirectory);
+                            if (desiredDisplayIcon != null) {
+                                desiredDisplayIcon = Environment.ExpandEnvironmentVariables(desiredDisplayIcon);
+                            }
+
                             string  displayIconName          = getName(key, DISPLAY_ICON, PRODUCT_ICON);
                             string? existingDisplayIcon      = key.GetValue(displayIconName) as string;
                             if (existingDisplayIcon != desiredDisplayIcon && desiredDisplayIcon != null) {
@@ -46,6 +50,7 @@ namespace AddRemoveProgramsCleaner {
 
                         if (program.modifications.hide is { } desiredHidden) {
                             if (isInstallerProduct(key)) {
+                                // Remove "ProductName" to hide Installer products
                                 string? productName       = key.GetValue(PRODUCT_NAME) as string;
                                 string? productNameHidden = key.GetValue(PRODUCT_NAME_HIDDEN) as string;
                                 bool    existingHidden    = productName == null && productNameHidden != null;
@@ -59,6 +64,7 @@ namespace AddRemoveProgramsCleaner {
                                     key.DeleteValue(PRODUCT_NAME_HIDDEN);
                                 }
                             } else {
+                                // Add "SystemComponent" = 1 to hide non-Installer products
                                 var existingHidden = key.GetValue(SYSTEM_COMPONENT) as int?;
                                 if (existingHidden != (desiredHidden ? 1 : 0)) {
                                     Console.WriteLine($"Setting {SYSTEM_COMPONENT} value of key {key} to {(desiredHidden ? 1 : 0)}");
