@@ -1,4 +1,5 @@
-﻿using DotNet.Globbing;
+﻿using System;
+using DotNet.Globbing;
 
 namespace AddRemoveProgramsCleaner.Programs {
 
@@ -7,8 +8,19 @@ namespace AddRemoveProgramsCleaner.Programs {
         public ProgramSelector selector { get; }
         public ProgramModifications modifications { get; }
 
-        public ProgramToClean(UninstallBaseKey baseKey, string subKeyPattern, string? setDisplayNameTo = null, ProgramModifications.DisplayIconGenerator? setDisplayIconUsing = null, bool? hide = null) {
-            selector      = new ProgramSelector(baseKey, Glob.Parse(subKeyPattern));
+        public ProgramToClean(UninstallBaseKey baseKey, ProgramSelector selector, string? setDisplayNameTo = null, ProgramModifications.DisplayIconGenerator? setDisplayIconUsing = null,
+                              bool?            hide = null) {
+            if ((selector.displayName == null) && (selector.keyName == null)) {
+                throw new ArgumentException("The selector must not have a null keyName pattern and a displayName pattern. At least one of these properties must be non-null.");
+            }
+
+            this.selector         = selector;
+            this.selector.baseKey = baseKey;
+            modifications         = new ProgramModifications(setDisplayNameTo, setDisplayIconUsing, hide);
+        }
+
+        public ProgramToClean(UninstallBaseKey baseKey, string keyPattern, string? setDisplayNameTo = null, ProgramModifications.DisplayIconGenerator? setDisplayIconUsing = null, bool? hide = null) {
+            selector      = new ProgramSelector(baseKey, Glob.Parse(keyPattern));
             modifications = new ProgramModifications(setDisplayNameTo, setDisplayIconUsing, hide);
         }
 

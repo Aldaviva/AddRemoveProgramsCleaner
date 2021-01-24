@@ -9,8 +9,18 @@ namespace AddRemoveProgramsCleaner.Programs {
 
     public class ProgramSelector {
 
-        public UninstallBaseKey baseKey { get; }
-        public Glob keyName { get; }
+        public UninstallBaseKey baseKey { get; set; }
+        public Glob? keyName { get; }
+        public Glob? displayName { get; }
+
+        public ProgramSelector(string? keyName = null, string? displayName = null) {
+            if ((displayName == null) && (keyName == null)) {
+                throw new ArgumentException("The selector must not have a null keyName pattern and a null displayName pattern. At least one of these properties must be non-null.");
+            }
+
+            this.keyName     = keyName != null ? Glob.Parse(keyName) : null;
+            this.displayName = displayName != null ? Glob.Parse(displayName) : null;
+        }
 
         public ProgramSelector(UninstallBaseKey baseKey, Glob keyName) {
             this.baseKey = baseKey;
@@ -18,62 +28,29 @@ namespace AddRemoveProgramsCleaner.Programs {
         }
 
         public IEnumerable<RegistryKey> openKey() {
-            using RegistryKey baseKeyHandle = baseKey.openKey();
-            if (baseKey == UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS || baseKey == UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS) {
-                return baseKeyHandle.GetSubKeyNames()
-                    .Select(subkey => baseKeyHandle.OpenSubKey(subkey, true))
-                    .Where(subkey => keyName.ToString() == subkey?.GetValue("PackageCode") as string)
-                    .Compact()
-                    .ToList();
-            } else if (isKeyNameLiteral()) {
-                RegistryKey? subKey = baseKeyHandle.OpenSubKey(keyName.ToString(), true);
-                return subKey != null ? new[] { subKey } : Enumerable.Empty<RegistryKey>();
+            using RegistryKey        baseKeyHandle = baseKey.openKey();
+            IEnumerable<RegistryKey> subKeys;
+
+            if (isPatternLiteral(keyName)) {
+                RegistryKey? subKey = baseKeyHandle.OpenSubKey(keyName!.ToString(), true);
+                subKeys = subKey != null ? new[] { subKey } : Enumerable.Empty<RegistryKey>();
             } else {
-                return baseKeyHandle.GetSubKeyNames()
-                    .Where(subkey => keyName.IsMatch(subkey))
-                    .Select(subkey => baseKeyHandle.OpenSubKey(subkey, true))
+                // ReSharper disable once AccessToDisposedClosure - closure is evaluated by .ToList() before method returns and baseKeyHandle is disposed
+                subKeys = baseKeyHandle.GetSubKeyNames()
+                    .Where(subkeyName => keyName?.IsMatch(subkeyName) ?? true)
+                    .Select(subkeyName => baseKeyHandle.OpenSubKey(subkeyName, true))
+                    .Compact()
+                    .Where(subKey => (displayName == null) || (RegistryHelpers.getDisplayName(subKey) is { } displayNameValue && displayName.IsMatch(displayNameValue)))
                     .Compact()
                     .ToList();
             }
+
+            return subKeys;
         }
 
-        /// <returns><c>true</c> if none of the path components of <c>keyName</c> have wildcards (* or ?) in them, or <c>false</c> if one or more components do contain a wildcard.</returns>
-        private bool isKeyNameLiteral() => keyName.Tokens.All(token => token is LiteralToken);
-
-        public override string ToString() {
-            return $"{nameof(baseKey)}: {baseKey}, {nameof(keyName)}: {keyName}";
-        }
-
-    }
-
-    public enum UninstallBaseKey {
-
-        LOCAL_MACHINE_UNINSTALL,
-        CURRENT_USER_UNINSTALL,
-        CLASSES_ROOT_INSTALLER_PRODUCTS,
-        CURRENT_USER_INSTALLER_PRODUCTS,
-
-        // ReSharper disable once InconsistentNaming - it's literally WOW6432NODE in the registry, not WOW6432_NODE
-        LOCAL_MACHINE_WOW6432NODE_UNINSTALL
-
-    }
-
-    public static class UninstallBaseKeyExtensions {
-
-        public static RegistryKey openKey(this UninstallBaseKey baseKey) {
-            return baseKey switch {
-                UninstallBaseKey.LOCAL_MACHINE_UNINSTALL             => Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
-                UninstallBaseKey.CURRENT_USER_UNINSTALL              => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
-                UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS     => Registry.ClassesRoot.OpenSubKey(@"Installer\Products")!,
-                UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL => Registry.LocalMachine.OpenSubKey(@"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")!,
-                UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS     => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Installer\Products")!,
-                _                                                    => throw new ArgumentOutOfRangeException(nameof(baseKey), baseKey, null)
-            };
-        }
-
-        public static string name(this UninstallBaseKey baseKey) {
-            using RegistryKey key = baseKey.openKey();
-            return key.Name;
+        /// <returns><c>true</c> if none of the path components of <c>pattern</c> have wildcards (* or ?) in them, or <c>false</c> if one or more components do contain a wildcard.</returns>
+        private static bool isPatternLiteral(Glob? pattern) {
+            return pattern?.Tokens.All(token => token is LiteralToken) ?? false;
         }
 
     }

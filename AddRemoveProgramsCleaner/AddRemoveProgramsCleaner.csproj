@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <Copyright>© 2020 Ben Hutchison</Copyright>
+    <Copyright>© 2021 Ben Hutchison</Copyright>
     <Authors>Ben Hutchison</Authors>
     <ApplicationIcon>imageres_87.ico</ApplicationIcon>
   </PropertyGroup>
