@@ -1,5 +1,4 @@
 ﻿using System;
-using DotNet.Globbing;
 
 namespace AddRemoveProgramsCleaner.Programs {
 
@@ -17,11 +16,6 @@ namespace AddRemoveProgramsCleaner.Programs {
             this.selector         = selector;
             this.selector.baseKey = baseKey;
             modifications         = new ProgramModifications(setDisplayNameTo, setDisplayIconUsing, hide);
-        }
-
-        public ProgramToClean(UninstallBaseKey baseKey, string keyPattern, string? setDisplayNameTo = null, ProgramModifications.DisplayIconGenerator? setDisplayIconUsing = null, bool? hide = null) {
-            selector      = new ProgramSelector(baseKey, Glob.Parse(keyPattern));
-            modifications = new ProgramModifications(setDisplayNameTo, setDisplayIconUsing, hide);
         }
 
     }

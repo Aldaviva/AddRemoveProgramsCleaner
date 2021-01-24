@@ -22,11 +22,6 @@ namespace AddRemoveProgramsCleaner.Programs {
             this.displayName = displayName != null ? Glob.Parse(displayName) : null;
         }
 
-        public ProgramSelector(UninstallBaseKey baseKey, Glob keyName) {
-            this.baseKey = baseKey;
-            this.keyName = keyName;
-        }
-
         public IEnumerable<RegistryKey> openKey() {
             using RegistryKey        baseKeyHandle = baseKey.openKey();
             IEnumerable<RegistryKey> subKeys;
