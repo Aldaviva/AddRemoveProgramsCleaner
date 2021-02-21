@@ -86,7 +86,12 @@ namespace AddRemoveProgramsCleaner {
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft XNA Framework Redistributable * Refresh"), setDisplayNameTo: "XNA"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "utvideo_is1"), setDisplayNameTo: "Ut Video"),
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Epic Games Launcher"), setDisplayNameTo: "Epic Games"),
-            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "AMD_Chipset_IODrivers"), setDisplayNameTo: "AMD Chipset")
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "AMD_Chipset_IODrivers"), setDisplayNameTo: "AMD Chipset"),
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "ESET Security"), setDisplayNameTo: "NOD32"),
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Adobe Acrobat DC"), setDisplayNameTo: "Acrobat"),
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft Update Health Tools"), hide: true),
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Intel(R) C++ Redistributables on Intel(R) 64"), hide: true),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Maxon Cinema 4D S22"), hide: true)
         };
 
         private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {

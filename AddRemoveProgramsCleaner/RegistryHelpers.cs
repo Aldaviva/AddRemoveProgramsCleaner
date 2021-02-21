@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using AddRemoveProgramsCleaner.Programs;
 using Microsoft.Win32;
 
 namespace AddRemoveProgramsCleaner {
