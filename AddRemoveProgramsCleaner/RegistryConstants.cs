@@ -10,6 +10,7 @@
         const string PRODUCT_NAME        = "ProductName";
         const string PRODUCT_NAME_HIDDEN = "ProductName hidden by Ben";
         const string PRODUCT_ICON        = "ProductIcon";
+        const string RELEASE_TYPE        = "ReleaseType";
 
     }
 

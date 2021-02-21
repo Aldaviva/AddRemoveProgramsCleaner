@@ -7,14 +7,15 @@
 
       <!--
         Include all dependency DLLs in the build directory, 
-        but exclude the 3 useless stubs from Microsoft.Win32.Registry, 
-        which have useful versions in runtimes (included below).
+        but exclude useless stubs which have useful versions in runtimes (included below).
       -->
       <InputAssemblies Include="$(OutputPath)*.dll"
                        Exclude="$(OutputPath)$(TargetName)$(TargetExt);
                        $(OutputPath)Microsoft.Win32.Registry.dll;
                        $(OutputPath)System.Security.AccessControl.dll;
-                       $(OutputPath)System.Security.Principal.Windows.dll" />
+                       $(OutputPath)System.Security.Principal.Windows.dll;
+                       $(OutputPath)Microsoft.Win32.SystemEvents.dll;
+                       $(OutputPath)System.Drawing.Common.dll" />
 
       <!-- Include Windows-specific libraries, since this is a Windows program. -->
       <InputAssemblies Include="$(OutputPath)runtimes\win\**\*.dll" />

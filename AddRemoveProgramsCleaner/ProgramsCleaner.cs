@@ -33,7 +33,7 @@ namespace AddRemoveProgramsCleaner {
 
                             string  displayIconName     = chooseValueName(key, RegistryConstants.DISPLAY_ICON, RegistryConstants.PRODUCT_ICON);
                             string? existingDisplayIcon = key.GetValue(displayIconName) as string;
-                            if ((existingDisplayIcon != desiredDisplayIcon) && (desiredDisplayIcon != null)) {
+                            if (existingDisplayIcon != desiredDisplayIcon && desiredDisplayIcon != null) {
                                 Console.WriteLine($"Setting {displayIconName} value of key {key} to {desiredDisplayIcon}");
                                 key.SetValue(displayIconName, desiredDisplayIcon, RegistryValueKind.String);
                             }
@@ -44,7 +44,7 @@ namespace AddRemoveProgramsCleaner {
                                 // Remove "ProductName" to hide Installer products
                                 string? productName       = key.GetValue(RegistryConstants.PRODUCT_NAME) as string;
                                 string? productNameHidden = key.GetValue(RegistryConstants.PRODUCT_NAME_HIDDEN) as string;
-                                bool    existingHidden    = (productName == null) && (productNameHidden != null);
+                                bool    existingHidden    = productName == null && productNameHidden != null;
                                 if (desiredHidden && !existingHidden) {
                                     Console.WriteLine($"Setting {RegistryConstants.PRODUCT_NAME_HIDDEN} value of {key} to {productName}");
                                     key.SetValue(RegistryConstants.PRODUCT_NAME_HIDDEN, productName!, RegistryValueKind.String);
@@ -67,6 +67,10 @@ namespace AddRemoveProgramsCleaner {
                     }
                 }
             }
+
+            IconFinder.findAndAssignIcons(UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL);
+            IconFinder.findAndAssignIcons(UninstallBaseKey.LOCAL_MACHINE_UNINSTALL);
+            IconFinder.findAndAssignIcons(UninstallBaseKey.CURRENT_USER_UNINSTALL);
         }
 
         private static string chooseValueName(RegistryKey key, string normalName, string productName) {
