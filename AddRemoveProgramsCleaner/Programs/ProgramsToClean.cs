@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AddRemoveProgramsCleaner.Programs;
+using AddRemoveProgramsCleaner.Registry;
 using Microsoft.Win32;
 
-namespace AddRemoveProgramsCleaner {
+namespace AddRemoveProgramsCleaner.Programs {
 
+    /// <remarks>
+    ///     If you're searching for the key using Registry Finder (https://registry-finder.com), it can be useful to search by Key:
+    ///     <c>
+    ///         HKEY_CLASSES_ROOT\Installer\Products, HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Installer\Products
+    ///     </c>
+    /// </remarks>
     public static class ProgramsToClean {
 
         public static IEnumerable<ProgramToClean> programsToClean { get; } = new List<ProgramToClean> {
@@ -20,12 +26,16 @@ namespace AddRemoveProgramsCleaner {
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "PHSP_*"), setDisplayNameTo: "Photoshop"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "PPRO_*"), setDisplayNameTo: "Premiere"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Adobe Creative Cloud"), setDisplayNameTo: "Creative Cloud"),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "AdobeGenuineService"), hide: true),
             new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "7 Taskbar Tweaker"), setDisplayNameTo: "7+ Taskbar Tweaker"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "A-Tuning_is1"), setDisplayNameTo: "A-Tuning"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "AutoHotkey"), setDisplayNameTo: "AutoHotkey"),
             new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{9ba76717-9b50-413d-8747-a8087fb27523}"), setDisplayNameTo: "Avidemux"),
-            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Lens Registration Tool"), setDisplayNameTo: "EOS Lens Registration"),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Lens Registration Tool"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Utility 3"), setDisplayNameTo: "EOS Utility"),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Utility 2"), hide: true),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Network Setting Tool"), hide: true),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Web Service Registration Tool"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Cheat Engine_is1"), setDisplayNameTo: "Cheat Engine"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Fraps"), setDisplayNameTo: "Fraps",
                 setDisplayIconUsing: (_, uninstallStringDirectory) => joinPaths(uninstallStringDirectory, "fraps.exe")),
@@ -74,7 +84,7 @@ namespace AddRemoveProgramsCleaner {
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "WinRAR archiver"), setDisplayNameTo: "WinRAR"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "winscp3_is1"), setDisplayNameTo: "WinSCP"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "RolandRDID0117"), setDisplayNameTo: "Quad-Capture"),
-            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{521c89be-637f-4274-a840-baaf7460c2b2}"), setDisplayNameTo: "Logitech G Hub"),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{521c89be-637f-4274-a840-baaf7460c2b2}"), setDisplayNameTo: "G Hub"),
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK 5.* from Visual Studio"), setDisplayNameTo: ".NET 5 SDK",
                 setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 5.0.100 (x64) from Visual Studio
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Microsoft Edge"), setDisplayNameTo: "Edge"),
@@ -91,11 +101,12 @@ namespace AddRemoveProgramsCleaner {
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Adobe Acrobat DC"), setDisplayNameTo: "Acrobat"),
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft Update Health Tools"), hide: true),
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Intel(R) C++ Redistributables on Intel(R) 64"), hide: true),
-            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Maxon Cinema 4D S22"), hide: true)
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Maxon Cinema 4D S22"), hide: true),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ 2013 Redistributable (x*"), hide: true),
         };
 
         private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
-            if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Winamp", "DisplayIcon", null) is string winampIcon) {
+            if (Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Winamp", "DisplayIcon", null) is string winampIcon) {
                 return Path.Combine(Path.GetDirectoryName(winampIcon.Split(',', 2)[0])!, @"Plugins\dsp_sc.dll") + ",0";
             }
 
@@ -107,12 +118,12 @@ namespace AddRemoveProgramsCleaner {
         }
 
         private static string? createNetCoreSdkIcon(string? location, string? directory) {
-            using RegistryKey? installedVersions = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\dotnet\Setup\InstalledVersions\x64");
+            using RegistryKey? installedVersions = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\dotnet\Setup\InstalledVersions\x64");
             if (installedVersions?.GetValue("InstallLocation") is string installLocation) {
                 string iconFilePath = joinPaths(installLocation, "dotnet.ico")!;
 
                 if (!File.Exists(iconFilePath)) {
-                    File.WriteAllBytes(iconFilePath, Resources.dotnetIcon);
+                    File.WriteAllBytes(iconFilePath, Resources.Resources.dotnetIcon);
                 }
 
                 return iconFilePath;

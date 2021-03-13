@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.Win32;
 
-namespace AddRemoveProgramsCleaner {
+namespace AddRemoveProgramsCleaner.Registry {
 
     public static class RegistryHelpers {
 

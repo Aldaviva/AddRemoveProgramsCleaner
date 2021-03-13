@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Win32;
 
-namespace AddRemoveProgramsCleaner {
+namespace AddRemoveProgramsCleaner.Registry {
 
     public enum UninstallBaseKey {
 
@@ -37,11 +37,11 @@ namespace AddRemoveProgramsCleaner {
 
         public static RegistryKey openKey(this UninstallBaseKey baseKey) {
             return baseKey switch {
-                UninstallBaseKey.LOCAL_MACHINE_UNINSTALL             => Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
-                UninstallBaseKey.CURRENT_USER_UNINSTALL              => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
-                UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS     => Registry.ClassesRoot.OpenSubKey(@"Installer\Products")!,
-                UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL => Registry.LocalMachine.OpenSubKey(@"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")!,
-                UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS     => Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Installer\Products")!,
+                UninstallBaseKey.LOCAL_MACHINE_UNINSTALL             => Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
+                UninstallBaseKey.CURRENT_USER_UNINSTALL              => Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall")!,
+                UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS     => Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(@"Installer\Products")!,
+                UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL => Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")!,
+                UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS     => Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Installer\Products")!,
                 _                                                    => throw new ArgumentOutOfRangeException(nameof(baseKey), baseKey, null)
             };
         }

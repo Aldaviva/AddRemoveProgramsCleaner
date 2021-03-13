@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using AddRemoveProgramsCleaner.Programs;
+using AddRemoveProgramsCleaner.Registry;
 using Microsoft.Win32;
 
 namespace AddRemoveProgramsCleaner {
@@ -68,9 +69,13 @@ namespace AddRemoveProgramsCleaner {
                 }
             }
 
-            IconFinder.findAndAssignIcons(UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL);
-            IconFinder.findAndAssignIcons(UninstallBaseKey.LOCAL_MACHINE_UNINSTALL);
-            IconFinder.findAndAssignIcons(UninstallBaseKey.CURRENT_USER_UNINSTALL);
+            foreach (UninstallBaseKey baseKey in new[] {
+                UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL,
+                UninstallBaseKey.LOCAL_MACHINE_UNINSTALL,
+                UninstallBaseKey.CURRENT_USER_UNINSTALL
+            }) {
+                IconFinder.findAndAssignIcons(baseKey);
+            }
         }
 
         private static string chooseValueName(RegistryKey key, string normalName, string productName) {

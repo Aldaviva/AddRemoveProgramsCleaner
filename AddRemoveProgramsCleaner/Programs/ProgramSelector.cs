@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AddRemoveProgramsCleaner.Registry;
 using DotNet.Globbing;
 using DotNet.Globbing.Token;
 using Microsoft.Win32;
@@ -13,8 +14,11 @@ namespace AddRemoveProgramsCleaner.Programs {
         public Glob? keyName { get; }
         public Glob? displayName { get; }
 
+        /// <param name="keyName">A literal string or glob of the subkey for this program. If <c>null</c>, matches any subkey with the specified <c>displayName</c>.</param>
+        /// <param name="displayName">A literal string or glob of the <c>DisplayName</c> of this program. If <c>null</c>, matches any subkey with the specified <c>keyName</c>.</param>
+        /// <exception cref="ArgumentException">If both <c>keyName</c> and <c>displayName</c> are <c>null</c>.</exception>
         public ProgramSelector(string? keyName = null, string? displayName = null) {
-            if ((displayName == null) && (keyName == null)) {
+            if (displayName == null && keyName == null) {
                 throw new ArgumentException("The selector must not have a null keyName pattern and a null displayName pattern. At least one of these properties must be non-null.");
             }
 
@@ -35,7 +39,7 @@ namespace AddRemoveProgramsCleaner.Programs {
                     .Where(subkeyName => keyName?.IsMatch(subkeyName) ?? true)
                     .Select(subkeyName => baseKeyHandle.OpenSubKey(subkeyName, true))
                     .Compact()
-                    .Where(subKey => (displayName == null) || (RegistryHelpers.getDisplayName(subKey) is { } displayNameValue && displayName.IsMatch(displayNameValue)))
+                    .Where(subKey => displayName == null || (RegistryHelpers.getDisplayName(subKey) is { } displayNameValue && displayName.IsMatch(displayNameValue)))
                     .Compact()
                     .ToList();
             }

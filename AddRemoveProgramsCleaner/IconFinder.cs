@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using AddRemoveProgramsCleaner.Registry;
 using Microsoft.Win32;
 using MoreLinq.Extensions;
 using Workshell.PE;

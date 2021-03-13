@@ -1,4 +1,5 @@
 ﻿using System;
+using AddRemoveProgramsCleaner.Registry;
 
 namespace AddRemoveProgramsCleaner.Programs {
 
@@ -9,7 +10,7 @@ namespace AddRemoveProgramsCleaner.Programs {
 
         public ProgramToClean(UninstallBaseKey baseKey, ProgramSelector selector, string? setDisplayNameTo = null, ProgramModifications.DisplayIconGenerator? setDisplayIconUsing = null,
                               bool?            hide = null) {
-            if ((selector.displayName == null) && (selector.keyName == null)) {
+            if (selector.displayName == null && selector.keyName == null) {
                 throw new ArgumentException("The selector must not have a null keyName pattern and a displayName pattern. At least one of these properties must be non-null.");
             }
 

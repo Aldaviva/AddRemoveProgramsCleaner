@@ -1,4 +1,4 @@
-﻿namespace AddRemoveProgramsCleaner {
+﻿namespace AddRemoveProgramsCleaner.Registry {
 
     public interface RegistryConstants {
 
