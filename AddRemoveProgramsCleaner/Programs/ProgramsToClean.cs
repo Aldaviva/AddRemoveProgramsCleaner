@@ -6,12 +6,7 @@ using Microsoft.Win32;
 
 namespace AddRemoveProgramsCleaner.Programs {
 
-    /// <remarks>
-    ///     If you're searching for the key using Registry Finder (https://registry-finder.com), it can be useful to search by Key:
-    ///     <c>
-    ///         HKEY_CLASSES_ROOT\Installer\Products, HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Installer\Products
-    ///     </c>
-    /// </remarks>
+    /// <remarks>If you're searching for the key using Registry Finder (https://registry-finder.com), it can be useful to search by Key: <c>HKEY_CLASSES_ROOT\Installer\Products, HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Installer\Products</c></remarks>
     public static class ProgramsToClean {
 
         public static IEnumerable<ProgramToClean> programsToClean { get; } = new List<ProgramToClean> {
@@ -103,6 +98,9 @@ namespace AddRemoveProgramsCleaner.Programs {
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Intel(R) C++ Redistributables on Intel(R) 64"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Maxon Cinema 4D S22"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ 2013 Redistributable (x*"), hide: true),
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "AdoptOpenJDK JDK *"), setDisplayNameTo: "Java"),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ 2015-2019 Redistributable (x*"), hide: true),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "MainType4_is1"), setDisplayNameTo: "MainType"),
         };
 
         private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
