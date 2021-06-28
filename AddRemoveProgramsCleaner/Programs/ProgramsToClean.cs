@@ -72,6 +72,8 @@ namespace AddRemoveProgramsCleaner.Programs {
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "TagScanner_is1"), setDisplayNameTo: "TagScanner"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Totalcmd"), setDisplayNameTo: "Total Commander",
                 setDisplayIconUsing: (location, _) => joinPaths(location, "TOTALCMD.EXE")),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Totalcmd64"), setDisplayNameTo: "Total Commander",
+                setDisplayIconUsing: (location, _) => joinPaths(location, "TOTALCMD64.EXE")),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "TreeSize Professional_is1"), setDisplayNameTo: "TreeSize",
                 setDisplayIconUsing: (location, _) => joinPaths(location, "TreeSize.exe")),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "8dedcee8"), setDisplayNameTo: "Visual Studio"),
@@ -84,6 +86,8 @@ namespace AddRemoveProgramsCleaner.Programs {
                 setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 5.0.100 (x64) from Visual Studio
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Microsoft Edge"), setDisplayNameTo: "Edge"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "SCDNAS"), setDisplayNameTo: "Shoutcast", setDisplayIconUsing: getShoutcastIcon),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Shoutcast DNAS Server"), setDisplayNameTo: "Shoutcast 2", setDisplayIconUsing:
+                getShoutcastIcon),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Autodesk Inventor *"), setDisplayNameTo: "Inventor"),
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library 2021"), hide: true),
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library Base Resolution Image Library 2021"), hide: true),

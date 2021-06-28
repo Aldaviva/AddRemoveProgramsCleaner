@@ -20,7 +20,8 @@ namespace AddRemoveProgramsCleaner {
             "vcredist_x64.exe",
             "vcredist_x86.exe",
             "dxwebsetup.exe",
-            "dxsetup.exe"
+            "dxsetup.exe",
+            "QuickSFV.exe"
         }.Select(s => s.ToLowerInvariant());
 
         public static void findAndAssignIcons(UninstallBaseKey baseKey) {
@@ -36,13 +37,11 @@ namespace AddRemoveProgramsCleaner {
                         string? uninstallerDirectory = Path.GetDirectoryName(uninstallerPath);
 
                         if (!string.IsNullOrEmpty(uninstallerDirectory)
-                            && childKey.GetValue(RegistryConstants.DISPLAY_NAME) is string displayName
+                            && childKey.GetValue(RegistryConstants.DISPLAY_NAME) is string
                             && !Path.GetFileName(uninstallerPath).Equals("msiexec.exe", StringComparison.InvariantCultureIgnoreCase)
                             && childKey.GetValue(RegistryConstants.RELEASE_TYPE) as string != "Update"
                             && childKey.GetValue(RegistryConstants.DISPLAY_ICON) == null) {
 
-                            // Console.WriteLine($"Scanning for {childKeyName} {displayName} EXEs with icons in {uninstallerDirectory}");
-                            // Console.WriteLine($"Uninstall string = {uninstallString}");
                             IEnumerable<string> exeFiles = Directory.EnumerateFiles(uninstallerDirectory, "*.exe", SearchOption.AllDirectories);
 
                             if (exeFiles.Where(exeFilename => Path.GetFullPath(exeFilename) != Path.GetFullPath(uninstallerPath)
@@ -63,7 +62,6 @@ namespace AddRemoveProgramsCleaner {
         }
 
         private static bool hasIcons(string exeFilename) {
-            // Console.WriteLine($"Checking for icons in {exeFilename}");
             using PortableExecutableImage exeFile = PortableExecutableImage.FromFile(exeFilename);
             try {
                 ResourceCollection? resourceCollection = ResourceCollection.Get(exeFile);
