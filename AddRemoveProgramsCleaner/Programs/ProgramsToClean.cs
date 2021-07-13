@@ -35,6 +35,7 @@ namespace AddRemoveProgramsCleaner.Programs {
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Fraps"), setDisplayNameTo: "Fraps",
                 setDisplayIconUsing: (_, uninstallStringDirectory) => joinPaths(uninstallStringDirectory, "fraps.exe")),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Git_is1"), setDisplayNameTo: "Git"),
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Git Extensions *"), setDisplayNameTo: "Git Extensions"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "PROSet"), setDisplayNameTo: "Intel Network Drivers"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "IrfanView64"), setDisplayNameTo: "IrfanView"),
             new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{182ae02c-6f8d-5cb2-931c-7a9b69cbddee}"), setDisplayNameTo: "ReSharper"),
