@@ -83,7 +83,7 @@ namespace AddRemoveProgramsCleaner.Programs {
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "winscp3_is1"), setDisplayNameTo: "WinSCP"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "RolandRDID0117"), setDisplayNameTo: "Quad-Capture"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{521c89be-637f-4274-a840-baaf7460c2b2}"), setDisplayNameTo: "G Hub"),
-            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK 5.* from Visual Studio"), setDisplayNameTo: ".NET 5 SDK",
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK * from Visual Studio"), setDisplayNameTo: ".NET",
                 setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 5.0.100 (x64) from Visual Studio
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Microsoft Edge"), setDisplayNameTo: "Edge"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "SCDNAS"), setDisplayNameTo: "Shoutcast", setDisplayIconUsing: getShoutcastIcon),
@@ -104,8 +104,11 @@ namespace AddRemoveProgramsCleaner.Programs {
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Maxon Cinema 4D S22"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ 2013 Redistributable (x*"), hide: true),
             new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "AdoptOpenJDK JDK *"), setDisplayNameTo: "Java"),
+            new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Eclipse Temurin JDK *"), setDisplayNameTo: "Java"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ 2015-2019 Redistributable (x*"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "MainType4_is1"), setDisplayNameTo: "MainType"),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector("UXPW_*"), hide: true),
+            new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Samsung NVM Express Driver *"), setDisplayNameTo: "Samsung NVMe Driver"),
         };
 
         private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
