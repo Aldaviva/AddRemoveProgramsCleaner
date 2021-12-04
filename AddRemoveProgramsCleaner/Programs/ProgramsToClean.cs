@@ -25,7 +25,8 @@ namespace AddRemoveProgramsCleaner.Programs {
             new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "7 Taskbar Tweaker"), setDisplayNameTo: "7+ Taskbar Tweaker"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "A-Tuning_is1"), setDisplayNameTo: "A-Tuning"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "AutoHotkey"), setDisplayNameTo: "AutoHotkey"),
-            new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{9ba76717-9b50-413d-8747-a8087fb27523}"), setDisplayNameTo: "Avidemux"),
+            new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "Avidemux VC++ 64bits"), setDisplayNameTo: "Avidemux", setDisplayIconUsing:
+                (installLocation, _) => Path.Combine(installLocation!, "avidemux.exe")),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Lens Registration Tool"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Utility 3"), setDisplayNameTo: "EOS Utility"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Utility 2"), hide: true),
