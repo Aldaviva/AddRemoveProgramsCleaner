@@ -26,7 +26,7 @@ namespace AddRemoveProgramsCleaner.Programs {
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "A-Tuning_is1"), setDisplayNameTo: "A-Tuning"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "AutoHotkey"), setDisplayNameTo: "AutoHotkey"),
             new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "Avidemux VC++ 64bits"), setDisplayNameTo: "Avidemux", setDisplayIconUsing:
-                (installLocation, _) => Path.Combine(installLocation!, "avidemux.exe")),
+                (installLocation, _) => joinPaths(installLocation, "avidemux.exe")),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Lens Registration Tool"), hide: true),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Utility 3"), setDisplayNameTo: "EOS Utility"),
             new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EOS Utility 2"), hide: true),
@@ -122,7 +122,8 @@ namespace AddRemoveProgramsCleaner.Programs {
         }
 
         private static string? joinPaths(params string?[] paths) {
-            return paths.All(path => path != null) ? Path.Combine(paths!) : null;
+            string[] pathsCompacted = paths.Where(s => s is not null).ToArray()!;
+            return pathsCompacted.Any() ? Path.Combine(pathsCompacted) : null;
         }
 
         private static string? createNetCoreSdkIcon(string? location, string? directory) {

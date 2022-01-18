@@ -17,7 +17,7 @@ namespace AddRemoveProgramsCleaner.Registry {
         public static bool isInstallerProduct(RegistryKey key) {
             return new[] {
                 UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS,
-                UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS
+                // UninstallBaseKey.CURRENT_USER_INSTALLER_PRODUCTS
             }.Any(baseKey => key.Name.StartsWith(baseKey.name() + '\\', StringComparison.InvariantCultureIgnoreCase));
         }
 
