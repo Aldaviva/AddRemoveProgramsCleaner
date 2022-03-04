@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <Copyright>© 2022 Ben Hutchison</Copyright>
@@ -19,7 +19,6 @@
   <ItemGroup>
     <PackageReference Include="DotNet.Glob" Version="3.1.3" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-    <PackageReference Include="morelinq" Version="3.3.2" />
     <PackageReference Include="Workshell.PE.Resources" Version="2.1.4.60" />
   </ItemGroup>
 
