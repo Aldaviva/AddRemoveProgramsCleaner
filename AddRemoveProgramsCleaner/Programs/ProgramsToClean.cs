@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using AddRemoveProgramsCleaner.Registry;
+﻿using AddRemoveProgramsCleaner.Registry;
 using Microsoft.Win32;
 
 namespace AddRemoveProgramsCleaner.Programs;
 
-/// <remarks>If you're searching for the key using Registry Finder (https://registry-finder.com), it can be useful to search by Key: <c>HKEY_CLASSES_ROOT\Installer\Products, HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Installer\Products</c></remarks>
+/// <remarks>If you're searching for the key using Registry Finder (https://registry-finder.com), it can be useful to search by Key:
+/// <c>HKEY_CLASSES_ROOT\Installer\Products, HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_LOCAL_MACHINE\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall, HKEY_CURRENT_USER\Software\Microsoft\Installer\Products</c>
+/// </remarks>
 public static class ProgramsToClean {
 
     public static IEnumerable<ProgramToClean> programsToClean { get; } = new List<ProgramToClean> {
@@ -39,7 +38,8 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Git Extensions *"), setDisplayNameTo: "Git Extensions"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "PROSet"), setDisplayNameTo: "Intel Network Drivers"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "IrfanView64"), setDisplayNameTo: "IrfanView"),
-        new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{182ae02c-6f8d-5cb2-931c-7a9b69cbddee}"), setDisplayNameTo: "ReSharper"),
+        new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{182ae02c-6f8d-5cb2-931c-7a9b69cbddee}"), setDisplayNameTo: "ReSharper"), //vs 2019
+        new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{a9ca2314-9117-5376-9ed6-b4043537989c}"), setDisplayNameTo: "ReSharper"), //vs 2022
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "JetBrains dotCover *"), setDisplayNameTo: "dotCover"),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "JetBrains dotMemory *"), setDisplayNameTo: "dotMemory"),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "JetBrains dotTrace *"), setDisplayNameTo: "dotTrace"),
@@ -79,7 +79,8 @@ public static class ProgramsToClean {
             setDisplayIconUsing: (location, _) => joinPaths(location, "TOTALCMD64.EXE")),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "TreeSize Professional_is1"), setDisplayNameTo: "TreeSize",
             setDisplayIconUsing: (location, _) => joinPaths(location, "TreeSize.exe")),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "8dedcee8"), setDisplayNameTo: "Visual Studio"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "8dedcee8"), setDisplayNameTo: "Visual Studio"), //2019
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "28291f0e"), setDisplayNameTo: "Visual Studio"), //2022
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "VLC media player"), setDisplayNameTo: "VLC"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "WinRAR archiver"), setDisplayNameTo: "WinRAR"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "winscp3_is1"), setDisplayNameTo: "WinSCP"),
@@ -116,6 +117,8 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Magic Bullet Suite *"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Microsoft EdgeWebView"), setDisplayNameTo: "Edge WebView2"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Topaz DeNoise AI *"), setDisplayNameTo: "DeNoise AI"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EPSON Scanner"), setDisplayNameTo: "Epson Scan"),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft System CLR Types for SQL Server 2019"), hide: true),
     };
 
     private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
