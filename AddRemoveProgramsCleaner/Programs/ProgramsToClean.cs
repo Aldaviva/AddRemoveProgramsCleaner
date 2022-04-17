@@ -22,7 +22,7 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Adobe Creative Cloud"), setDisplayNameTo: "Creative Cloud"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "AdobeGenuineService"), hide: true),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "7 Taskbar Tweaker"), setDisplayNameTo: "7+ Taskbar Tweaker"),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "A-Tuning_is1"), setDisplayNameTo: "A-Tuning"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "A-Tuning_is1"), setDisplayNameTo: "ASRock A-Tuning"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "AutoHotkey"), setDisplayNameTo: "AutoHotkey"),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "Avidemux VC++ 64bits"), setDisplayNameTo: "Avidemux", setDisplayIconUsing:
             (installLocation, _) => joinPaths(installLocation, "avidemux.exe")),
@@ -49,12 +49,14 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "KeePassPasswordSafe2_is1"), setDisplayNameTo: "KeePass"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Launchy_*_is1"), setDisplayNameTo: "Launchy"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "ProPlus2019Retail - en-us"), setDisplayNameTo: "Office"),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{ca67548a-5ebe-413a-b50c-4b9ceb6d66c6}"), hide: true),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{33d1fd90-4274-48a1-9bc1-97e33d9c2d6f}"), hide: true),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{33d1fd90-4274-48a1-9bc1-97e33d9c2d6f}"), hide: true), //VC++ 2012 x86
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{ca67548a-5ebe-413a-b50c-4b9ceb6d66c6}"), hide: true), //VC++ 2012 x64
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{ef6b00ec-13e1-4c25-9064-b2f383cb8412}"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{61087a79-ac85-455c-934d-1fa22cc64f36}"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{e31cb1a4-76b5-46a5-a084-3fa419e82201}"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{282975d8-55fe-4991-bbbb-06a72581ce58}"), hide: true),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{4d8dcf8c-a72a-43e1-9833-c12724db736e}"), hide: true), //VC++ 2015-2022 x86
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{57a73df6-4ba9-4c1d-bbbb-517289ff6c13}"), hide: true), //VC++ 2015-2022 x64
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{6F320B93-EE3C-4826-85E0-ADF79F8D4C61}"), setDisplayNameTo: "Visual Studio Installer"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Afterburner"), setDisplayNameTo: "Afterburner"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Notepad2"), setDisplayNameTo: "Notepad2"),
