@@ -1,5 +1,4 @@
 ﻿using AddRemoveProgramsCleaner.Registry;
-using Microsoft.Win32;
 
 namespace AddRemoveProgramsCleaner.Programs;
 
@@ -38,8 +37,7 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Git Extensions *"), setDisplayNameTo: "Git Extensions"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "PROSet"), setDisplayNameTo: "Intel Network Drivers"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "IrfanView64"), setDisplayNameTo: "IrfanView"),
-        new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{182ae02c-6f8d-5cb2-931c-7a9b69cbddee}"), setDisplayNameTo: "ReSharper"), //vs 2019
-        new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "{a9ca2314-9117-5376-9ed6-b4043537989c}"), setDisplayNameTo: "ReSharper"), //vs 2022
+        new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "JetBrains ReSharper in Visual Studio Community *"), setDisplayNameTo: "ReSharper"),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "JetBrains dotCover *"), setDisplayNameTo: "dotCover"),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "JetBrains dotMemory *"), setDisplayNameTo: "dotMemory"),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(displayName: "JetBrains dotTrace *"), setDisplayNameTo: "dotTrace"),
@@ -49,6 +47,7 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "KeePassPasswordSafe2_is1"), setDisplayNameTo: "KeePass"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Launchy_*_is1"), setDisplayNameTo: "Launchy"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "ProPlus2019Retail - en-us"), setDisplayNameTo: "Office"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "O365ProPlusRetail - en-us"), setDisplayNameTo: "Office"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{33d1fd90-4274-48a1-9bc1-97e33d9c2d6f}"), hide: true), //VC++ 2012 x86
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{ca67548a-5ebe-413a-b50c-4b9ceb6d66c6}"), hide: true), //VC++ 2012 x64
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{ef6b00ec-13e1-4c25-9064-b2f383cb8412}"), hide: true),
@@ -61,15 +60,13 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Afterburner"), setDisplayNameTo: "Afterburner"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Notepad2"), setDisplayNameTo: "Notepad2"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}_Display.Driver"),
-            setDisplayNameTo: "Nvidia Graphics Driver",
-            setDisplayIconUsing: (_, _) => @"%ProgramFiles%\NVIDIA Corporation\Display.NvContainer\NVDisplay.Container.exe"),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}_HDAudio.Driver"),
-            setDisplayNameTo: "Nvidia Audio Driver",
-            setDisplayIconUsing: (_, _) => @"%ProgramFiles%\NVIDIA Corporation\Display.NvContainer\NVDisplay.Container.exe"),
+            setDisplayNameTo: "Nvidia Graphics Driver", setDisplayIconUsing: getNvidiaIcon),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}_HDAudio.Driver"), setDisplayNameTo: "Nvidia Audio Driver",
+            setDisplayIconUsing: getNvidiaIcon),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}_Display.PhysX"), setDisplayNameTo: "PhysX",
-            setDisplayIconUsing: (_, _) => @"%ProgramFiles%\NVIDIA Corporation\Display.NvContainer\NVDisplay.Container.exe"),
+            setDisplayIconUsing: getNvidiaIcon),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}_USBC"), setDisplayNameTo: "Nvidia USB-C Driver",
-            setDisplayIconUsing: (_, _) => @"%ProgramFiles%\NVIDIA Corporation\Display.NvContainer\NVDisplay.Container.exe"),
+            setDisplayIconUsing: getNvidiaIcon),
         new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "Fiddler2"), setDisplayNameTo: "Fiddler"),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Progress® Telerik® JustMock *"), setDisplayNameTo: "JustMock"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "PS Tray Factory_is1"), setDisplayNameTo: "PS Tray Factory"),
@@ -81,8 +78,7 @@ public static class ProgramsToClean {
             setDisplayIconUsing: (location, _) => joinPaths(location, "TOTALCMD64.EXE")),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "TreeSize Professional_is1"), setDisplayNameTo: "TreeSize",
             setDisplayIconUsing: (location, _) => joinPaths(location, "TreeSize.exe")),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "8dedcee8"), setDisplayNameTo: "Visual Studio"), //2019
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "28291f0e"), setDisplayNameTo: "Visual Studio"), //2022
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Visual Studio Community *"), setDisplayNameTo: "Visual Studio"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "VLC media player"), setDisplayNameTo: "VLC"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "WinRAR archiver"), setDisplayNameTo: "WinRAR"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "winscp3_is1"), setDisplayNameTo: "WinSCP"),
@@ -109,10 +105,10 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft Update Health Tools"), hide: true),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Intel(R) C++ Redistributables on Intel(R) 64"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Maxon Cinema 4D *"), hide: true),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ 2013 Redistributable (x*"), hide: true),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "AdoptOpenJDK JDK *"), setDisplayNameTo: "Java"),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Eclipse Temurin JDK *"), setDisplayNameTo: "Java"),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ 2015-2019 Redistributable (x*"), hide: true),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ * Redistributable *"), hide: true),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ * Redistributable *"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "MainType4_is1"), setDisplayNameTo: "MainType"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector("UXPW_*"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Samsung NVM Express Driver *"), setDisplayNameTo: "Samsung NVMe Driver"),
@@ -121,6 +117,8 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Topaz DeNoise AI *"), setDisplayNameTo: "DeNoise AI"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "EPSON Scanner"), setDisplayNameTo: "Epson Scan"),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft System CLR Types for SQL Server 2019"), hide: true),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Retrospect Client *"), setDisplayNameTo: "Retrospect Client"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(displayName: "Registry Finder *"), setDisplayNameTo: "Registry Finder"),
     };
 
     private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
@@ -137,8 +135,7 @@ public static class ProgramsToClean {
     }
 
     private static string? createNetCoreSdkIcon(string? location, string? directory) {
-        using RegistryKey? installedVersions = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\dotnet\Setup\InstalledVersions\x64");
-        if (installedVersions?.GetValue("InstallLocation") is string installLocation) {
+        if (Microsoft.Win32.Registry.GetValue(@"HKLM\SOFTWARE\WOW6432Node\dotnet\Setup\InstalledVersions\x64", "InstallLocation", null) is string installLocation) {
             string iconFilePath = joinPaths(installLocation, "dotnet.ico")!;
 
             if (!File.Exists(iconFilePath)) {
@@ -149,6 +146,10 @@ public static class ProgramsToClean {
         }
 
         return null;
+    }
+
+    private static string? getNvidiaIcon(string? installLocation, string? uninstallStringDirectory) {
+        return Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NVDisplay.ContainerLocalSystem\LocalSystem\Watchdog\Session", "Container", null) as string;
     }
 
 }
