@@ -121,6 +121,9 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft System CLR Types for SQL Server 2019"), hide: true),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Retrospect Client *"), setDisplayNameTo: "Retrospect Client"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(displayName: "Registry Finder *"), setDisplayNameTo: "Registry Finder"),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Nefarius Virtual Gamepad Emulation Bus Driver"),
+            setDisplayNameTo: "ViGEm Bus Driver"),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Hex Workshop v*"), setDisplayNameTo: "Hex Workshop"),
     };
 
     private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
