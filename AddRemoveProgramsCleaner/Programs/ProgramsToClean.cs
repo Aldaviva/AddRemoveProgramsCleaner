@@ -94,10 +94,6 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "SCDNAS"), setDisplayNameTo: "Shoutcast", setDisplayIconUsing: getShoutcastIcon),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Shoutcast DNAS Server"), setDisplayNameTo: "Shoutcast 2", setDisplayIconUsing:
             getShoutcastIcon),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Autodesk Inventor *"), setDisplayNameTo: "Inventor"),
-        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library 2021"), hide: true),
-        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library Base Resolution Image Library 2021"), hide: true),
-        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library Low Resolution Image Library 2021"), hide: true),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft XNA Framework Redistributable * Refresh"), setDisplayNameTo: "XNA"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "utvideo_is1"), setDisplayNameTo: "Ut Video"),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Epic Games Launcher"), setDisplayNameTo: "Epic Games"),
@@ -124,6 +120,11 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Nefarius Virtual Gamepad Emulation Bus Driver"),
             setDisplayNameTo: "ViGEm Bus Driver"),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Hex Workshop v*"), setDisplayNameTo: "Hex Workshop"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(displayName: "Autodesk Inventor Professional 20?? - *"), setDisplayNameTo: "Inventor"),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Desktop Connect Service"), hide: true),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library 20??"), hide: true),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library Base Resolution Image Library 20??"), hide: true),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library Low Resolution Image Library 20??"), hide: true),
     };
 
     private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
