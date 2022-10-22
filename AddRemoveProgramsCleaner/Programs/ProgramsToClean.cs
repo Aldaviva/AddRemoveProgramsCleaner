@@ -87,9 +87,7 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK 5.* from Visual Studio"), setDisplayNameTo: ".NET",
             setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 5.0.100 (x64) from Visual Studio
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK 6.* from Visual Studio"), setDisplayNameTo: ".NET",
-            setDisplayIconUsing: createNetCoreSdkIcon),
-        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: ".NET"),
-            setDisplayIconUsing: createNetCoreSdkIcon), // .NET SDK installed by Windows Update
+            setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 6.0.302 (x64) from Visual Studio
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Microsoft Edge"), setDisplayNameTo: "Edge"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "SCDNAS"), setDisplayNameTo: "Shoutcast", setDisplayIconUsing: getShoutcastIcon),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Shoutcast DNAS Server"), setDisplayNameTo: "Shoutcast 2", setDisplayIconUsing:
@@ -125,6 +123,9 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library 20??"), hide: true),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library Base Resolution Image Library 20??"), hide: true),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Autodesk Material Library Low Resolution Image Library 20??"), hide: true),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Everything"), setDisplayNameTo: "Everything"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(displayName: "Zerene Stacker *"), setDisplayNameTo: "Stacker",
+            setDisplayIconUsing: (location, _) => Path.Combine(location!, "zerenstk.exe")),
     };
 
     private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
