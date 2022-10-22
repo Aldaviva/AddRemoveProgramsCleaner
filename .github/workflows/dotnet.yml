@@ -1,4 +1,4 @@
-name: .NET Core
+name: .NET
 
 on:
   push:
@@ -9,25 +9,26 @@ jobs:
   build:
     env:
       ProjectName: AddRemoveProgramsCleaner
+      TargetPlatform: win10-x64
 
     runs-on: windows-latest
 
     steps:
     - name: Clone
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        
-    - name: Set up .NET SDK
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-        
+      uses: actions/checkout@v3
+    
+    - name: Restore
+      run: dotnet restore --runtime ${{ env.TargetPlatform }} --locked-mode --verbosity normal
+
+    - name: Build
+      run: dotnet build --no-restore --runtime ${{ env.TargetPlatform }} --configuration Release --no-self-contained --verbosity normal
+
     - name: Publish
-      run: dotnet publish --configuration Release -p:PublishSingleFile=true --runtime win10-x64 --self-contained false
+      run: dotnet publish --no-build --configuration Release -p:PublishSingleFile=true --runtime ${{ env.TargetPlatform }} --self-contained false
       
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v2
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ env.ProjectName }}.exe
         path: ${{ env.ProjectName }}\bin\Release\**\publish\*.exe
+        if-no-files-found: error
