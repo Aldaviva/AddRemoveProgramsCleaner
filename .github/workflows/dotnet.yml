@@ -21,7 +21,7 @@ jobs:
       run: dotnet restore --runtime ${{ env.TargetPlatform }} --locked-mode --verbosity normal
 
     - name: Build
-      run: dotnet build --no-restore --runtime ${{ env.TargetPlatform }} --configuration Release --no-self-contained --verbosity normal
+      run: dotnet build ${{ env.ProjectName }} --no-restore --runtime ${{ env.TargetPlatform }} --configuration Release --no-self-contained --verbosity normal
 
     - name: Publish
       run: dotnet publish --no-build --configuration Release -p:PublishSingleFile=true --runtime ${{ env.TargetPlatform }} --self-contained false
