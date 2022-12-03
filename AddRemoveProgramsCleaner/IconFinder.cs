@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using AddRemoveProgramsCleaner.Registry;
 using Microsoft.Win32;
 using Workshell.PE;
 using Workshell.PE.Resources;
 
-namespace AddRemoveProgramsCleaner; 
+namespace AddRemoveProgramsCleaner;
 
 public static class IconFinder {
 
@@ -29,13 +25,12 @@ public static class IconFinder {
         foreach (string childKeyName in parentKey.GetSubKeyNames()) {
             using RegistryKey childKey = parentKey.OpenSubKey(childKeyName, true)!;
             if (childKey.GetValue(RegistryConstants.UNINSTALL_STRING) is string uninstallString) {
-                IEnumerable<string> uninstallParts = CommandLineParser.splitArgs(uninstallString).ToArray();
-
                 try {
-                    string  uninstallerPath      = uninstallParts.First();
-                    string? uninstallerDirectory = Path.GetDirectoryName(uninstallerPath);
+                    string? uninstallerPath      = getUninstallerAbsolutePath(uninstallString);
+                    string? uninstallerDirectory = uninstallerPath != null ? Path.GetDirectoryName(uninstallerPath) : null;
 
-                    if (!string.IsNullOrEmpty(uninstallerDirectory)
+                    if (!string.IsNullOrEmpty(uninstallerPath)
+                        && !string.IsNullOrEmpty(uninstallerDirectory)
                         && childKey.GetValue(RegistryConstants.DISPLAY_NAME) is string
                         && !Path.GetFileName(uninstallerPath).Equals("msiexec.exe", StringComparison.InvariantCultureIgnoreCase)
                         && childKey.GetValue(RegistryConstants.RELEASE_TYPE) as string != "Update"
@@ -57,6 +52,18 @@ public static class IconFinder {
                 }
             }
         }
+    }
+
+    private static string? getUninstallerAbsolutePath(string uninstallString) {
+        IEnumerable<string> split = CommandLineParser.splitArgs(uninstallString).ToArray();
+        for (int i = split.Count(); i > 0; i--) {
+            string candidatePath = string.Join(' ', split.Take(i));
+            if (File.Exists(candidatePath)) {
+                return candidatePath;
+            }
+        }
+
+        return null;
     }
 
     private static bool hasIcons(string exeFilename) {

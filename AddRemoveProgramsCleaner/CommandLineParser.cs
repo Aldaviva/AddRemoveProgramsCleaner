@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.Text;
 
-namespace AddRemoveProgramsCleaner; 
+namespace AddRemoveProgramsCleaner;
 
 internal static class CommandLineParser {
 
@@ -9,7 +8,7 @@ internal static class CommandLineParser {
     ///     See https://stackoverflow.com/a/64236441/979493
     /// </summary>
     internal static IEnumerable<string> splitArgs(string commandLine) {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new();
 
         bool quoted     = false;
         bool escaped    = false;
