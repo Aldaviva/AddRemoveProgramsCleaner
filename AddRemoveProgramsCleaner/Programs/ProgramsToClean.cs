@@ -84,10 +84,8 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "winscp3_is1"), setDisplayNameTo: "WinSCP"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "RolandRDID0117"), setDisplayNameTo: "Quad-Capture"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "{521c89be-637f-4274-a840-baaf7460c2b2}"), setDisplayNameTo: "G Hub"),
-        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK 5.* from Visual Studio"), setDisplayNameTo: ".NET",
-            setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 5.0.100 (x64) from Visual Studio
-        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK 6.* from Visual Studio"), setDisplayNameTo: ".NET",
-            setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 6.0.302 (x64) from Visual Studio
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Microsoft .NET SDK * from Visual Studio"), setDisplayNameTo: ".NET",
+            setDisplayIconUsing: createNetCoreSdkIcon), // Microsoft .NET SDK 7.0.100 (x64) from Visual Studio
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Microsoft Edge"), setDisplayNameTo: "Edge"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "SCDNAS"), setDisplayNameTo: "Shoutcast", setDisplayIconUsing: getShoutcastIcon),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Shoutcast DNAS Server"), setDisplayNameTo: "Shoutcast 2", setDisplayIconUsing:
@@ -126,6 +124,14 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Everything"), setDisplayNameTo: "Everything"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(displayName: "Zerene Stacker *"), setDisplayNameTo: "Stacker",
             setDisplayIconUsing: (location, _) => Path.Combine(location!, "zerenstk.exe")),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "CLion *"), setDisplayNameTo: "CLion"),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: ".NET Framework 4.5.2 Targeting Pack"), setDisplayIconUsing: createNetCoreSdkIcon),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: ".NET Framework 4.5.2 Targeting Pack (*)"), hide: true),
+        new(baseKey: UninstallBaseKey.CURRENT_USER_UNINSTALL, selector: new ProgramSelector(keyName: "Rustup"), setDisplayNameTo: "Rustup"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Windows Software Development Kit - *"), setDisplayNameTo: "Windows SDK"),
+        new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Windows SDK AddOn"), hide: true),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "TagScanner *"), setDisplayNameTo: "TagScanner"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Samsung_MonSetup"), setDisplayNameTo: "Samsung Monitor Driver"),
     };
 
     private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {
