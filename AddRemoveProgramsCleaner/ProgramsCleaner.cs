@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using AddRemoveProgramsCleaner.Programs;
+﻿using AddRemoveProgramsCleaner.Programs;
 using AddRemoveProgramsCleaner.Registry;
 using Microsoft.Win32;
 
-namespace AddRemoveProgramsCleaner; 
+namespace AddRemoveProgramsCleaner;
 
 internal static class ProgramsCleaner {
 

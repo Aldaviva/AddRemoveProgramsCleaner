@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
-namespace AddRemoveProgramsCleaner.Registry; 
+namespace AddRemoveProgramsCleaner.Registry;
 
 public enum UninstallBaseKey {
 
@@ -20,10 +19,10 @@ public enum UninstallBaseKey {
     /// </summary>
     CLASSES_ROOT_INSTALLER_PRODUCTS,
 
-    /// <summary>
-    ///     <c>HKCU\Software\Microsoft\Installer\Products</c>
-    ///     Seems to have been removed, or maybe it never existed in the first place. Windows 7 only? Doesn't appear in Windows 10 21H2 or Windows Server 2019 1809.
-    /// </summary>
+    // /// <summary>
+    // ///     <c>HKCU\Software\Microsoft\Installer\Products</c>
+    // ///     Seems to have been removed, or maybe it never existed in the first place. Windows 7 only? Doesn't appear in Windows 10 21H2 or Windows Server 2019 1809.
+    // /// </summary>
     // [Obsolete]
     // CURRENT_USER_INSTALLER_PRODUCTS,
 

@@ -1,6 +1,6 @@
-﻿namespace AddRemoveProgramsCleaner.Programs; 
+﻿namespace AddRemoveProgramsCleaner.Programs;
 
-public class ProgramModifications {
+public class ProgramModifications(string? displayName, ProgramModifications.DisplayIconGenerator? displayIconGenerator, bool? hide) {
 
     /// <summary>
     /// Delegate function to determine the icon for an Uninstall entry based on other fields in the registry key.
@@ -10,14 +10,8 @@ public class ProgramModifications {
     /// <returns>The absolute path to an icon file, or to an icon group resource in an EXE or DLL (with optional trailing comma and icon index). To leave the icon unchanged, return <c>null</c>.</returns>
     public delegate string? DisplayIconGenerator(string? installLocation, string? uninstallStringDirectory);
 
-    public string? displayName { get; }
-    public DisplayIconGenerator? displayIconGenerator { get; }
-    public bool? hide { get; }
-
-    public ProgramModifications(string? displayName, DisplayIconGenerator? displayIconGenerator, bool? hide) {
-        this.displayName          = displayName;
-        this.displayIconGenerator = displayIconGenerator;
-        this.hide                 = hide;
-    }
+    public string? displayName { get; } = displayName;
+    public DisplayIconGenerator? displayIconGenerator { get; } = displayIconGenerator;
+    public bool? hide { get; } = hide;
 
 }

@@ -105,7 +105,7 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(displayName: "Microsoft Visual C++ * Redistributable *"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "MainType4_is1"), setDisplayNameTo: "MainType"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector("UXPW_*"), hide: true),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Samsung NVM Express Driver"), setDisplayNameTo: "Samsung NVMe Driver"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Samsung NVM Express Driver"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Magic Bullet Suite *"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "Microsoft EdgeWebView"), setDisplayNameTo: "Edge WebView2"),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "Topaz DeNoise AI *"), setDisplayNameTo: "DeNoise AI"),
@@ -131,7 +131,9 @@ public static class ProgramsToClean {
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Windows Software Development Kit - *"), setDisplayNameTo: "Windows SDK"),
         new(baseKey: UninstallBaseKey.CLASSES_ROOT_INSTALLER_PRODUCTS, selector: new ProgramSelector(displayName: "Windows SDK AddOn"), hide: true),
         new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "TagScanner *"), setDisplayNameTo: "TagScanner"),
-        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Samsung_MonSetup"), setDisplayNameTo: "Samsung Monitor Driver"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(displayName: "Samsung_MonSetup"), hide: true),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_WOW6432NODE_UNINSTALL, selector: new ProgramSelector(keyName: "{7258BA11-600C-430E-A759-27E2C691A335}_is1"), setDisplayNameTo: "GOG Galaxy"),
+        new(baseKey: UninstallBaseKey.LOCAL_MACHINE_UNINSTALL, selector: new ProgramSelector(keyName: "EVGA Precision X1"), setDisplayNameTo: "Precision X1"),
     };
 
     private static string? getShoutcastIcon(string? installLocation, string? uninstallStringDirectory) {

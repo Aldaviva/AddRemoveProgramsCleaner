@@ -1,6 +1,8 @@
-﻿using System.Reflection;
-using AddRemoveProgramsCleaner.Registry;
+﻿using AddRemoveProgramsCleaner.Registry;
 using Microsoft.Win32;
+using System.Collections.Frozen;
+using System.Reflection;
+using Unfucked.Windows;
 using Workshell.PE;
 using Workshell.PE.Resources;
 
@@ -8,7 +10,9 @@ namespace AddRemoveProgramsCleaner;
 
 public static class IconFinder {
 
-    private static readonly IEnumerable<string> BLACKLISTED_ICON_EXES = new[] {
+    private static readonly string SYSTEM32 = Environment.ExpandEnvironmentVariables(@"%SYSTEMROOT%\System32");
+
+    private static readonly FrozenSet<string> BLACKLISTED_ICON_EXES = new[] {
         "UnityCrashHandler64.exe",
         "vc_redist.x64.exe",
         "vc_redist.x86.exe",
@@ -17,7 +21,7 @@ public static class IconFinder {
         "dxwebsetup.exe",
         "dxsetup.exe",
         "QuickSFV.exe"
-    }.Select(s => s.ToLowerInvariant());
+    }.Select(s => s.ToLowerInvariant()).ToFrozenSet(StringComparer.Ordinal);
 
     public static void findAndAssignIcons(UninstallBaseKey baseKey) {
         using RegistryKey parentKey = baseKey.openKey();
@@ -31,6 +35,7 @@ public static class IconFinder {
 
                     if (!string.IsNullOrEmpty(uninstallerPath)
                         && !string.IsNullOrEmpty(uninstallerDirectory)
+                        && !uninstallerDirectory.Equals(SYSTEM32, StringComparison.OrdinalIgnoreCase)
                         && childKey.GetValue(RegistryConstants.DISPLAY_NAME) is string
                         && !Path.GetFileName(uninstallerPath).Equals("msiexec.exe", StringComparison.InvariantCultureIgnoreCase)
                         && childKey.GetValue(RegistryConstants.RELEASE_TYPE) as string != "Update"
@@ -55,7 +60,7 @@ public static class IconFinder {
     }
 
     private static string? getUninstallerAbsolutePath(string uninstallString) {
-        IEnumerable<string> split = CommandLineParser.splitArgs(uninstallString).ToArray();
+        IEnumerable<string> split = WindowsProcesses.CommandLineToEnumerable(uninstallString).ToArray();
         for (int i = split.Count(); i > 0; i--) {
             string candidatePath = string.Join(' ', split.Take(i));
             if (File.Exists(candidatePath)) {

@@ -9,13 +9,13 @@ jobs:
   build:
     env:
       ProjectName: AddRemoveProgramsCleaner
-      TargetPlatform: win10-x64
+      TargetPlatform: win-x64
 
     runs-on: windows-latest
 
     steps:
     - name: Clone
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Restore
       run: dotnet restore --runtime ${{ env.TargetPlatform }} --locked-mode --verbosity normal
@@ -27,7 +27,7 @@ jobs:
       run: dotnet publish --no-build --configuration Release -p:PublishSingleFile=true --runtime ${{ env.TargetPlatform }} --no-self-contained
       
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ env.ProjectName }}.exe
         path: ${{ env.ProjectName }}\bin\Release\**\publish\*.exe

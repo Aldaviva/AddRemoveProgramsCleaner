@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AddRemoveProgramsCleaner.Registry;
+﻿using AddRemoveProgramsCleaner.Registry;
 using DotNet.Globbing;
 using DotNet.Globbing.Token;
 using Microsoft.Win32;
+using Unfucked;
 
-namespace AddRemoveProgramsCleaner.Programs; 
+namespace AddRemoveProgramsCleaner.Programs;
 
 public class ProgramSelector {
 
@@ -32,7 +30,7 @@ public class ProgramSelector {
 
         if (isPatternLiteral(keyName)) {
             RegistryKey? subKey = baseKeyHandle.OpenSubKey(keyName!.ToString(), true);
-            subKeys = subKey != null ? new[] { subKey } : Enumerable.Empty<RegistryKey>();
+            subKeys = subKey != null ? [subKey] : [];
         } else {
             // ReSharper disable once AccessToDisposedClosure - closure is evaluated by .ToList() before method returns and baseKeyHandle is disposed
             subKeys = baseKeyHandle.GetSubKeyNames()
@@ -48,8 +46,6 @@ public class ProgramSelector {
     }
 
     /// <returns><c>true</c> if none of the path components of <c>pattern</c> have wildcards (* or ?) in them, or <c>false</c> if one or more components do contain a wildcard.</returns>
-    private static bool isPatternLiteral(Glob? pattern) {
-        return pattern?.Tokens.All(token => token is LiteralToken) ?? false;
-    }
+    private static bool isPatternLiteral(Glob? pattern) => pattern?.Tokens.All(token => token is LiteralToken) ?? false;
 
 }
